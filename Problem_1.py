@@ -70,9 +70,12 @@ class EnhancedMerger:
 
         return df1_set.issubset(df2_set)
 
-    def _validate_superset(self):
+    def _validate_superset(self): ### Extra Functionality: Validate supercheck
         if self._superset is not None and self._superset not in ['left', 'right', 'all']: 
             raise ValueError(f'{self._superset} is not a valid argument for superset')
+        
+        if self._superset is not None and self._on is None and self._left_on is None:
+            raise ValueError('No merge columns were specified')
 
         if self._superset == 'left' and not self._df1_is_superset :
             raise Exception("The left data frame is not a superset")
